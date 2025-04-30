@@ -3,6 +3,7 @@ const { Client, middleware } = require('@line/bot-sdk');
 require('dotenv').config();
 
 const app = express();
+app.use(express.json());
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
@@ -11,12 +12,10 @@ const config = {
 
 const client = new Client(config);
 
-app.use(express.json());
-
 app.post('/webhook', middleware(config), (req, res) => {
   Promise.all(req.body.events.map(handleEvent))
-    .then(result => res.json(result))
-    .catch(err => {
+    .then((result) => res.json(result))
+    .catch((err) => {
       console.error('エラー:', err);
       res.status(500).end();
     });
@@ -30,10 +29,9 @@ function handleEvent(event) {
   }
 
   if (event.message.text === '缶') {
-    const replyText = 'はい、これ';
     return client.replyMessage(event.replyToken, {
       type: 'text',
-      text: replyText
+      text: 'はい、これ'
     });
   }
 

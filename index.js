@@ -1,7 +1,8 @@
 const express = require('express');
 const { Client, middleware } = require('@line/bot-sdk');
 require('dotenv').config();
-const bodyParser = require('body-parser');
+
+const app = express();
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
@@ -9,21 +10,21 @@ const config = {
 };
 
 const client = new Client(config);
-const app = express();
-app.use(bodyParser.json());
+
+app.use(express.json());
 
 app.post('/webhook', middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error('Error:', err);
+  Promise.all(req.body.events.map(handleEvent))
+    .then(result => res.json(result))
+    .catch(err => {
+      console.error('エラー:', err);
       res.status(500).end();
     });
 });
 
 function handleEvent(event) {
   console.log('受け取ったイベント:', JSON.stringify(event));
+
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null);
   }

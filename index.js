@@ -12,16 +12,18 @@ const config = {
 
 const client = new line.Client(config);
 
-app.post('/webhook', line.middleware(config), (req, res) => {
-  Promise.all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error('Error:', err);
-      res.status(500).end();
-    });
+app.post('/webhook', line.middleware(config), async (req, res) => {
+  try {
+    const events = req.body.events;
+    const results = await Promise.all(events.map(handleEvent));
+    res.json(results);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).end();
+  }
 });
 
-function handleEvent(event) {
+async function handleEvent(event) {
   console.log('受け取ったイベント:', JSON.stringify(event));
 
   if (event.type !== 'message' || event.message.type !== 'text') {
@@ -29,9 +31,10 @@ function handleEvent(event) {
   }
 
   if (event.message.text === '缶') {
+    const replyText = 'はい、これ';
     return client.replyMessage(event.replyToken, {
       type: 'text',
-      text: 'はい、これ',
+      text: replyText,
     });
   }
 

@@ -1,16 +1,15 @@
 const express = require('express');
 const { Client, middleware } = require('@line/bot-sdk');
-const bodyParser = require('body-parser');
 require('dotenv').config();
+const bodyParser = require('body-parser');
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 
-const client = new Client(config);
 const app = express();
-
+const client = new Client(config);
 app.use(bodyParser.json());
 
 app.post('/webhook', middleware(config), (req, res) => {
@@ -34,7 +33,7 @@ function handleEvent(event) {
     const replyText = 'はい、これ';
     return client.replyMessage(event.replyToken, {
       type: 'text',
-      text: replyText,
+      text: replyText
     });
   }
 

@@ -1,6 +1,7 @@
 const express = require('express');
-const { Client } = require('@line/bot-sdk');
+const { Client, middleware } = require('@line/bot-sdk');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
@@ -12,8 +13,9 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/webhook', (req, res) => {
-  Promise.all(req.body.events.map(handleEvent))
+app.post('/webhook', middleware(config), (req, res) => {
+  Promise
+    .all(req.body.events.map(handleEvent))
     .then(result => res.json(result))
     .catch(err => {
       console.error('Error:', err);
@@ -32,14 +34,14 @@ function handleEvent(event) {
     const replyText = 'はい、これ';
     return client.replyMessage(event.replyToken, {
       type: 'text',
-      text: replyText
+      text: replyText,
     });
   }
 
   return Promise.resolve(null);
 }
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

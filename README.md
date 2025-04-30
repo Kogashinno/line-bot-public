@@ -1,2 +1,2 @@
 # line-bot-public
-.
+!

@@ -7,8 +7,8 @@ app.use(express.json());
 
 const config = {
   const config = {
-  channelAccessToken: 'G...（GQuSc03Si62lCTMUq/t0Skfwc/m1aX5lb3A2LbQsxFvErJbDqjGvWWoZu+qImjrp9J9e4aSPcdDoO47RrWlD7P9VQTT0woeHIY3z5SiV07I0kE6dJRmQhqaTYOcp1DsiObOC8WniJYNDgk/kW1ttSgdB04t89/1O/w1cDnyilFU=）',
-  channelSecret: 'f...（f742c82dce71e7673676c92686cbfb69）',
+  channelAccessToken: 'G...GQuSc03Si62lCTMUq/t0Skfwc/m1aX5lb3A2LbQsxFvErJbDqjGvWWoZu+qImjrp9J9e4aSPcdDoO47RrWlD7P9VQTT0woeHIY3z5SiV07I0kE6dJRmQhqaTYOcp1DsiObOC8WniJYNDgk/kW1ttSgdB04t89/1O/w1cDnyilFU=',
+  channelSecret: 'f...f742c82dce71e7673676c92686cbfb69',
 };
 const client = new line.Client(config);
 

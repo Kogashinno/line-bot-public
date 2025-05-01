@@ -6,10 +6,10 @@ const app = express();
 app.use(express.json());
 
 const config = {
-  channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNEL_SECRET,
+  const config = {
+  channelAccessToken: 'G...（実際のアクセストークン）',
+  channelSecret: 'f...（実際のチャネルシークレット）',
 };
-
 const client = new line.Client(config);
 
 app.post('/webhook', line.middleware(config), async (req, res) => {

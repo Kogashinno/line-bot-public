@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 
 const config = {
-  channelAccessToken: 'G...nLa1xPmavwxaxHUMMCNuDdeU2BHdT06rnAG5qmgLEfV+si2usanQFFHSscdy8a089J9e4aSPcdDoO47RrWlD7P9VQTT0woeHIY3z5SiV07ILsLruVNiENQJ5/FhwetHA4sXD0kdHoRDPCp/F2ed6RwdB04t89/1O/w1cDnyilFU=',
-  channelSecret: 'f...f742c82dce71e7673676c92686cbfb69',
+  channelAccessToken: "G...nLa1xPmavwxaxHUMMCNuDdeU2BHdT06rnAG5qmgLEfV+si2usanQFFHSscdy8a089J9e4aSPcdDoO47RrWlD7P9VQTT0woeHIY3z5SiV07ILsLruVNiENQJ5/FhwetHA4sXD0kdHoRDPCp/F2ed6RwdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "f...f742c82dce71e7673676c92686cbfb69",
 };
 
 const client = new line.Client(config);

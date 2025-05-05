@@ -33,8 +33,8 @@ async function handleEvent(event) {
   if (event.message.text === '缶') {
     const replyText = 'はい、これ';
     return client.replyMessage(event.replyToken, {
-      type: 'text',
-      text: replyText,
+      type:'text',
+      text:replyText,
     });
   }
 

@@ -16,7 +16,7 @@ app.post('/webhook', line.middleware(config), async (req, res) => {
   try {
     const events = req.body.events;
     const results = await Promise.all(events.map(handleEvent));
-    res.json(results);
+    res.sendStatus(200);
   } catch (err) {
     console.error('Error:', err);
     res.status(500).end();

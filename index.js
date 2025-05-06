@@ -1,7 +1,7 @@
 const express = require('express');
 const line = require('@line/bot-sdk');
 require('dotenv').config();
-
+console.log('SECRET:', process.env.LINE_CHANNEL_SECRET);
 const app = express();
 app.use(express.json());
 

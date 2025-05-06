@@ -1,5 +1,5 @@
 const express = require('express');
-const line = require('@line/bot-sdk');
+const { middleware, Client } = require('@line/bot-sdk');
 require('dotenv').config();
 
 console.log('SECRET:', process.env.LINE_CHANNEL_SECRET);
@@ -9,44 +9,31 @@ const config = {
   channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 
+const client = new Client(config);
 const app = express();
 
-app.use(express.json()); 
-app.post('/webhook', line.middleware(config), async (req, res) => {
+// middleware は json() より先に！
+app.post('/webhook', middleware(config), async (req, res) => {
   try {
     const events = req.body.events;
-    await Promise.all(events.map(handleEvent));
+    await Promise.all(events.map(async (event) => {
+      if (event.type === 'message' && event.message.type === 'text') {
+        if (event.message.text === '缶') {
+          await client.replyMessage(event.replyToken, {
+            type: 'text',
+            text: 'はい、これ',
+          });
+        }
+      }
+    }));
     res.sendStatus(200);
   } catch (err) {
-    console.error('Error:', err);
-    res.status(500).end();
+    console.error('全体エラー:', err);
+    res.sendStatus(500);
   }
 });
 
-
-async function handleEvent(event) {
-  console.log('受け取ったイベント:', JSON.stringify(event));
-
-  if (event.type !== 'message' || event.message.type !== 'text') {
-    return Promise.resolve(null);
-  }
-
- if (event.message.text === '缶') {
-  const replyText = 'はい、これ';
-  return client.replyMessage(event.replyToken, {
-    type: 'text',
-    text: replyText,
-  }).catch(err => {
-    console.error('リプライエラー:', err);
-    return null;
-  });
-}
-
-
-  return Promise.resolve(null);
-}
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Listening on ${port}`);
 });

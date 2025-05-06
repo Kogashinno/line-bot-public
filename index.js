@@ -30,13 +30,17 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  if (event.message.text === '缶') {
-    const replyText = 'はい、これ';
-    return client.replyMessage(event.replyToken, {
-      type: 'text',
-      text: replyText,
-    });
-  }
+  31: if (event.message.text === '缶') {
+32:   const replyText = 'はい、これ';
+33:   try {
+34:     await client.replyMessage(event.replyToken, {
+35:       type: 'text',
+36:       text: replyText,
+37:     });
+38:   } catch (err) {
+39:     console.error('リプライエラー:', err);
+40:   }
+41: }
 
   return Promise.resolve(null);
 }

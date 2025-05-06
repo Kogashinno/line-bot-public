@@ -32,15 +32,15 @@ async function handleEvent(event) {
 
  if (event.message.text === '缶') {
   const replyText = 'はい、これ';
-  try {
-    await client.replyMessage(event.replyToken, {
-      type: 'text',
-      text: replyText,
-    });
-  } catch (err) {
+  return client.replyMessage(event.replyToken, {
+    type: 'text',
+    text: replyText,
+  }).catch(err => {
     console.error('リプライエラー:', err);
-  }
+    return null;
+  });
 }
+
 
   return Promise.resolve(null);
 }
